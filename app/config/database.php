@@ -75,7 +75,7 @@ return array(
 		),
 		'pgsql2'    => array(
 			'driver'   => 'pgsql',
-			'host'     => '10.1.1.2',
+			'host'     => '10.1.1.0',
 			'database' => 'frizelo',
 			'username' => 'frizelobackup',
 			'password' => 'fribackup2015',
