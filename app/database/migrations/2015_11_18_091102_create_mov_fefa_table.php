@@ -19,12 +19,13 @@ class CreateMovFefaTable extends Migration {
 				$table->string('propriedade');
 				$table->string('cidade');
 				$table->string('gta');
+				$table->string('gta_serie');
 				$table->integer('qtd_macho');
 				$table->integer('qtd_femea');
 				$table->double('peso_macho');
 				$table->double('peso_femea');
-				$table->string('situacao');
-				$table->string('fechamento');
+				$table->string('situacao')->default('ativo');
+				$table->string('fechamento')->nullable();
 				$table->string('chave', 50);
 
 				$table->timestamps();

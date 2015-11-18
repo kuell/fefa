@@ -17,50 +17,50 @@
 		<div class="form-group">
 			<div class="col-md-3">
 				{{ Form::label('data_compra', 'Data Compra: ' , ['class'=>'form-label']) }}
-				{{ Form::text('data_compra', null, ['class'=>'form-control']) }}
+				{{ Form::text('data_compra', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 			<div class="col-md-2">
 				{{ Form::label('nfe', 'Nota Fiscal: ' , ['class'=>'form-label']) }}
-				{{ Form::text('nfe', null, ['class'=>'form-control']) }}
+				{{ Form::text('nfe', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 			<div class="col-md-3">
 				{{ Form::label('nfp', 'Nota Produtor: ' , ['class'=>'form-label']) }}
-				{{ Form::text('nfp', null, ['class'=>'form-control']) }}
+				{{ Form::text('nfp', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 			<div class="col-md-3">
 				{{ Form::label('cidade', 'Municipio: ' , ['class'=>'form-label']) }}
-				{{ Form::text('cidade', null, ['class'=>'form-control']) }}
+				{{ Form::text('cidade', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="col-md-6">
 				{{ Form::label('produtor', 'Produtor: ' , ['class'=>'form-label']) }}
-				{{ Form::text('produtor', null, ['class'=>'form-control']) }}
+				{{ Form::text('produtor', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 			<div class="col-md-6">
 				{{ Form::label('propriedade', 'Propriedade: ' , ['class'=>'form-label']) }}
-				{{ Form::text('propriedade', null, ['class'=>'form-control']) }}
+				{{ Form::text('propriedade', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="col-md-3">
 				{{ Form::label('qtd_macho', 'Qtd Macho: ' , ['class'=>'form-label']) }}
-				{{ Form::text('qtd_macho', null, ['class'=>'form-control']) }}
+				{{ Form::text('qtd_macho', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 			<div class="col-md-3">
 				{{ Form::label('peso_macho', 'Peso Macho: ' , ['class'=>'form-label']) }}
-				{{ Form::text('peso_macho', null, ['class'=>'form-control']) }}
+				{{ Form::text('peso_macho', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 
 			<div class="col-md-3">
 				{{ Form::label('qtd_femea', 'Qtd Femea: ' , ['class'=>'form-label']) }}
-				{{ Form::text('qtd_femea', null, ['class'=>'form-control']) }}
+				{{ Form::text('qtd_femea', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 			<div class="col-md-3">
 				{{ Form::label('peso_femea', 'Peso Femea: ' , ['class'=>'form-label']) }}
-				{{ Form::text('peso_femea', null, ['class'=>'form-control']) }}
+				{{ Form::text('peso_femea', null, ['class'=>'form-control', 'readonly']) }}
 			</div>
 		</div>
 
