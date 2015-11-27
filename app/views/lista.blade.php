@@ -37,7 +37,7 @@
 		<tbody>
 			@foreach($fefas as $fefa)
 			<tr>
-				<td>{{ date('d/m/Y', strtotime($fefa->data_compra)) }}</td>
+				<td>{{ Format::dateView($fefa->data_compra) }}</td>
 				<td>{{ link_to_route('fefa.edit', $fefa->nfe, $fefa->id) }}</td>
 				<td>{{ $fefa->nfp }}</td>
 				<td>{{ $fefa->cidade }}</td>
