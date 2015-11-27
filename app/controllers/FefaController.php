@@ -27,7 +27,12 @@ class FefaController extends \BaseController {
 	public function create() {
 		$nota = NotaEntrada::where('chave_acesso_nfe', Input::get('chave', null))->first();
 
-		if (empty($nota)) {
+		if (!empty(Input::get('avulsa'))) {
+			$nota = new Fefa();
+
+			return View::make('form', compact('nota'));
+
+		} else if (empty($nota)) {
 			return Redirect::route('fefa.index')
 				->withErrors(Input::all())
 				->with('message', 'Chave de acesso da nota não encontrada!');
@@ -52,7 +57,9 @@ class FefaController extends \BaseController {
 		$validate = Validator::make($input, $this->fefas->rules);
 
 		if ($validate->passes()) {
-			$this->fefas->create($input);
+			$fefa = new Fefa($input);
+
+			$fefa->save();
 
 			return Redirect::to('/');
 		} else {
@@ -118,7 +125,10 @@ class FefaController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy($id) {
-		//
+		$fefa = $this->fefas->find($id);
+		$fefa->delete();
+
+		return Redirect::route('fefa.index');
 	}
 
 	public function getRelatorios() {
@@ -126,18 +136,23 @@ class FefaController extends \BaseController {
 	}
 
 	public function getRelatorioSif() {
-		$fefas = $this->fefas;
+		$fefas = $this->fefas->orderBy('data_compra');
 
-		if (!empty(Input::get('cidade'))) {
-			$fefas = $fefas->cidade();
-		}
 		if (!empty(Input::get('periodo'))) {
 			$fefas = $fefas->periodo();
 		}
 
-		$fefas = $fefas->get();
-
 		return View::make('relatorio_sif', compact('fefas'));
+	}
+
+	public function getRelatorioFefa() {
+		$fefas = $this->fefas->orderBy('data_compra');
+
+		if (!empty(Input::get('periodo'))) {
+			$fefas = $fefas->periodo();
+		}
+
+		return View::make('relatorio_fefa', compact('fefas'));
 	}
 
 }

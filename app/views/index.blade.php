@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>::: Movimentações do Fefa ::: </title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		{{ HTML::style('assets/css/bootstrap.min.css') }}
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>::: Movimentações do Fefa ::: </title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    {{ HTML::style('assets/css/bootstrap.min.css') }}
     {{ HTML::style('assets/js/plugins/daterangepicker.css') }}
     {{ HTML::style('assets/js/plugins/jquery.dataTables.min.css') }}
 
-		<!--[if lt IE 9]>
-			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     {{ HTML::style('assets/css/styles.css') }}
+    <!-- script references -->
 
-	</head>
-	<body>
+    {{ HTML::script('assets/js/jquery.min.js') }}
+    {{ HTML::script('assets/js/bootstrap.min.js') }}
+    {{ HTML::script('assets/js/jquery-ui.js') }}
+
+    {{ HTML::script('assets/js/plugins/moment.min.js') }}
+    {{ HTML::script('assets/js/plugins/daterangepicker.js') }}
+    {{ HTML::script('assets/js/plugins/jquery.dataTables.js') }}
+    {{ HTML::script('assets/js/plugins/jquery.mask.min.js') }}
+    {{ HTML::script('assets/js/plugins/jquery.autocomplete.min.js') }}
+
+    {{ HTML::script('assets/js/scripts.js') }}
+
+  </head>
+  <body>
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -82,21 +95,13 @@ $tipo = 'warning';
             @include('lista')
 
       </div><!--/row-->
-	</div>
+  </div>
 </div><!--/.container-->
 
 <footer>
 
 </footer>
 
-	<!-- script references -->
-
-    {{ HTML::script('assets/js/jquery.min.js') }}
-    {{ HTML::script('assets/js/bootstrap.min.js') }}
-    {{ HTML::script('assets/js/plugins/moment.min.js') }}
-    {{ HTML::script('assets/js/plugins/daterangepicker.js') }}
-    {{ HTML::script('assets/js/plugins/jquery.dataTables.js') }}
-    {{ HTML::script('assets/js/scripts.js') }}
     @yield('scripts')
-	</body>
+  </body>
 </html>

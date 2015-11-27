@@ -14,4 +14,8 @@ $(document).ready(function() {
       format: 'DD/MM/YYYY'
     }
   });
+
+  $('.data').mask('00/00/0000');
+  $('.double').mask('000.000.000.000.000,00',{reverse:true});
+  $('.int').mask('000.000.000.000.000',{reverse:true});
 });

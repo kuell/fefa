@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Route::get('/fefa/relatorios', 'FefaController@getRelatorios');
 Route::get('/fefa/relatorio/sif', 'FefaController@getRelatorioSif');
+Route::get('/fefa/relatorio/fefa', 'FefaController@getRelatorioFefa');
 
 Route::resource('fefa', 'FefaController');
