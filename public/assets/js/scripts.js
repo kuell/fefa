@@ -18,4 +18,11 @@ $(document).ready(function() {
   $('.data').mask('00/00/0000');
   $('.double').mask('000.000.000.000.000,00',{reverse:true});
   $('.int').mask('000.000.000.000.000',{reverse:true});
+
+  $(document).keyup(function handleEnter(e, func) {
+      if(e.keyCode == 27){
+        location = '/';
+      }
+  });
+
 });
