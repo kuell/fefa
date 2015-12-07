@@ -63,7 +63,7 @@ class FefaController extends \BaseController {
 
 			return Redirect::to('/');
 		} else {
-			return Redirect::route('fefa.create', ['chave' => $input['chave']])
+			return Redirect::route('fefa.edit', ['chave' => $input['chave']])
 				->withInput()
 				->withErrors($validate)
 				->with('message', 'Houve erros na validação dos dados.');
@@ -101,8 +101,12 @@ class FefaController extends \BaseController {
 	 */
 	public function update($id) {
 		$input = Input::all();
+		
+		$rules = $this->fefas->rules;
 
-		$validate = Validator::make($input, $this->fefas->rules);
+		$rules['nfe'] = $this->fefas->rules['nfe'].','.$id;
+		
+		$validate = Validator::make($input, $rules);
 
 		if ($validate->passes()) {
 			$fefa = $this->fefas->find($id);

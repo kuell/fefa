@@ -10,7 +10,11 @@ class Fefa extends \Eloquent {
 	public $rules =
 	[
 		'gta'       => 'required',
-		'gta_serie' => 'required'
+		'gta_serie' => 'required',
+		'produtor'=>'required',
+		'propriedade'=>'required',
+		'nfe'=>'required|unique:mov_fefa,nfe',
+		'cidade'=>'required'
 	];
 
 	public function scopePeriodo($query) {

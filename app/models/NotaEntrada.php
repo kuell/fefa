@@ -96,7 +96,7 @@ class NotaEntrada extends \Eloquent {
 				$total = $total+$produto->peso_item;
 			}
 		}
-		return $total;
+		return Format::valorView($total, 2);
 
 	}
 
@@ -108,7 +108,7 @@ class NotaEntrada extends \Eloquent {
 				$total = $total+$produto->peso_item;
 			}
 		}
-		return $total;
+		return Format::valorView($total, 2);
 
 	}
 

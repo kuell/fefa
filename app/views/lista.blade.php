@@ -21,8 +21,8 @@
 	<table class="table table-hover" id="fefa">
 		<thead>
 			<tr>
-				<th>Data Compra</th>
 				<th>NFE</th>
+				<th>Data Compra</th>
 				<th>NFP</th>
 				<th>Cidade</th>
 				<th>Produtor</th>
@@ -37,8 +37,8 @@
 		<tbody>
 			@foreach($fefas as $fefa)
 			<tr>
-				<td>{{ Format::dateView($fefa->data_compra) }}</td>
 				<td>{{ link_to_route('fefa.edit', $fefa->nfe, $fefa->id) }}</td>
+				<td>{{ Format::dateView($fefa->data_compra) }}</td>
 				<td>{{ $fefa->nfp }}</td>
 				<td>{{ $fefa->cidade }}</td>
 				<td>{{ $fefa->produtor }}</td>
@@ -84,6 +84,17 @@
 		});
 
 	 	$('#fefa').DataTable({
+	 		columnDefs: [ {
+	            targets: [ 0 ],
+	            orderData: [ 0, 2 ]
+	        }, {
+	            targets: [ 1 ],
+	            orderData: [ 2, 0 ]
+	        }, {
+	            targets: [ 4 ],
+	            orderData: [ 4, 0 ]
+	        } ],
+		 	paging: false,
 		 	"language": {
 	            "lengthMenu": "Exibir _MENU_ registros por página",
 	            "zeroRecords": "Nenhum registro retornado - desculpe-nos",

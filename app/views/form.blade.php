@@ -33,7 +33,8 @@
 				@if(!empty($nota->chave))
 					{{ Form::text('cidade', null, ['class'=>'form-control', 'readonly']) }}
 				@else
-					{{ Form::select('cidade', ['Selecione ...']+array_map('utf8_encode', Municipio::ms()->lists('cidade', 'cidade')), null, ['class'=>'form-control']) }}
+
+					{{ Form::select('cidade', ['Selecione ...']+Municipio::municipios(), null, ['class'=>'form-control']) }}
 				@endif
 
 			</div>
@@ -92,16 +93,11 @@
 
 <script type="text/javascript">
 	document.getElementById('gta').focus();
-
 </script>
 @if(empty($nota->chave))
 	<script type="text/javascript">
 		$(function(){
 			$('input[name=peso_femea], input[name=peso_macho], input[name=qtd_femea], input[name=qtd_macho], input[name=nfe], input[name=nfp], input[name=data_compra], input[name=municipio], input[name=propriedade], input[name=produtor], input[name=cidade] ').removeAttr('readonly')
-		});
-
-		$('input[name=produtor]').autocomplete({
-
 		});
 
 	</script>
