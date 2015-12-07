@@ -9,7 +9,7 @@
 	{{ Form::model($nota, ['class'=>'form form-horizontal', 'route'=>['fefa.update',$nota->id], 'method'=>'PATCH']) }}
 @endif
 		<div class="form-group">
-			<div class="col-md-12">
+			<div class="col-md-10">
 				{{ Form::label('chave', 'Chave de Acesso: ' , ['class'=>'form-label']) }}
 				{{ Form::text('chave', null, ['class'=>'form-control', 'readonly']) }}
 			</div>

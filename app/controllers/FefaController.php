@@ -25,24 +25,34 @@ class FefaController extends \BaseController {
 	 * @return Response
 	 */
 	public function create() {
-		$nota = NotaEntrada::where('chave_acesso_nfe', Input::get('chave', null))->first();
 
-		if (!empty(Input::get('avulsa'))) {
+		if (!empty(Input::get('avulsa')) && empty(Input::get('chave'))) {
 			$nota = new Fefa();
-
 			return View::make('form', compact('nota'));
 
-		} else if (empty($nota)) {
-			return Redirect::route('fefa.index')
-				->withErrors(Input::all())
-				->with('message', 'Chave de acesso da nota não encontrada!');
+		} else if (!empty(Input::get('chave'))) {
+
+			$nota = NotaEntrada::where('chave_acesso_nfe', Input::get('chave', null))->first();
+			
+			if(!empty($nota)){
+
+				
+				if (count($nota->fefa) != 0) {
+					return Redirect::route('fefa.edit', $nota->fefa->id);
+				} else {
+					return View::make('form', compact('nota'));
+				}
+
+			}
+			else{
+				
+				return Redirect::route('fefa.index')
+					->withErrors(Input::all())
+					->with('message', 'Chave de acesso da nota não encontrada!');
+				
+			}
 		}
 
-		if (!empty($nota->fefa)) {
-			return Redirect::route('fefa.edit', $nota->fefa->id);
-		} else {
-			return View::make('form', compact('nota'));
-		}
 
 	}
 
