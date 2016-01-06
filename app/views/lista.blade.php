@@ -68,6 +68,12 @@
 </div>
 
 
+<style type="text/css">
+	.table{
+		font-size: 9px;
+	}
+</style>
+
 
 @endif
 
@@ -97,9 +103,9 @@
 		 	paging: false,
 		 	"language": {
 	            "lengthMenu": "Exibir _MENU_ registros por página",
-	            "zeroRecords": "Nenhum registro retornado - desculpe-nos",
+	            "zeroRecords": "Nenhum registro retornado",
 	            "info": "Mostrando pagina _PAGE_ de _PAGES_",
-	            "infoEmpty": "Não existe registros",
+	            "infoEmpty": "Não existem registros",
 	            "infoFiltered": "(filtered from _MAX_ total records)",
 				"search":         "Buscar por: ",
 		        "paginate": {
