@@ -44,6 +44,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/fefa/relatorios">Relatorios</a></li>
+            <li><a href="#" id="finalizar">Finalizar Fefa</a></li>
           </ul>
         </div>
       </div>
@@ -103,5 +104,13 @@ $tipo = 'warning';
 </footer>
 
     @yield('scripts')
+
+    <script type="text/javascript">
+      $(function () {
+        $('#finalizar').bind('click', function() {
+          open('/fefa/finalizar', 'Finalizar', 'channelmode=yes')
+        });
+      })
+    </script>
   </body>
 </html>

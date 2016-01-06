@@ -23,8 +23,12 @@ class Fefa extends \Eloquent {
 		return $query->whereBetween('data_compra', $periodo);
 	}
 
+	public function scopeAbertas($query){
+		return $query->whereNull('fechamento');
+	}
+
 	public static function total($campo) {
-		$total = DB::table('mov_fefa')->sum($campo);
+		$total = DB::table('mov_fefa')->whereNull('fechamento')->sum($campo);
 
 		return $total;
 	}

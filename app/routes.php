@@ -19,4 +19,16 @@ Route::get('/fefa/relatorios', 'FefaController@getRelatorios');
 Route::get('/fefa/relatorio/sif', 'FefaController@getRelatorioSif');
 Route::get('/fefa/relatorio/fefa', 'FefaController@getRelatorioFefa');
 
+Route::get('fefa/finalizar', function(){
+	return View::make('finalizar');
+});
+Route::post('/fefa/finalizar', function(){
+	$input = Input::all() + ['situacao'=>'fechado'];
+
+	Fefa::abertas()->update($input);
+
+	return 'Ok';
+});
+
+
 Route::resource('fefa', 'FefaController');

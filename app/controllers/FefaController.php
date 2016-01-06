@@ -14,7 +14,7 @@ class FefaController extends \BaseController {
 	 * @return Response
 	 */
 	public function index() {
-		$fefas = $this->fefas->all();
+		$fefas = $this->fefas->abertas()->get();
 
 		return View::make('index', compact('fefas'));
 	}
