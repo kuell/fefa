@@ -35,15 +35,14 @@ class NotaEntrada extends \Eloquent {
 	}
 
 	public function getCidadeAttribute() {
-
 		return utf8_encode($this->fazenda()->municipio->cidade);
 	}
 
 	public function getProdutorAttribute() {
-		return $this->pecuarista->razao_social.' - '.$this->pecuarista->codigo_cadastro;
+		return utf8_encode($this->pecuarista->razao_social.' - '.$this->pecuarista->codigo_cadastro);
 	}
 	public function getPropriedadeAttribute() {
-		return $this->fazenda()->nomefazenda;
+		return utf8_encode($this->fazenda()->nomefazenda);
 	}
 
 	public function getDataCompraAttribute() {
