@@ -150,7 +150,7 @@ class FefaController extends \BaseController {
 	}
 
 	public function getRelatorioSif() {
-		$fefas = $this->fefas->orderBy('data_compra');
+		$fefas = $this->fefas->abertas()->orderBy('data_compra');
 
 		if (!empty(Input::get('periodo'))) {
 			$fefas = $fefas->periodo();
@@ -160,11 +160,7 @@ class FefaController extends \BaseController {
 	}
 
 	public function getRelatorioFefa() {
-		$fefas = $this->fefas->orderBy('data_compra');
-
-		if (!empty(Input::get('periodo'))) {
-			$fefas = $fefas->periodo();
-		}
+		$fefas = $this->fefas->abertas()->orderBy('data_compra');
 
 		return View::make('relatorio_fefa', compact('fefas'));
 	}

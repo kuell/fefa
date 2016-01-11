@@ -78,7 +78,7 @@
 			</div>
 			<div class="col-md-3">
 				{{ Form::label('gta_serie', 'Serie da GTA: ' , ['class'=>'form-label']) }}
-				{{ Form::text('gta_serie', null, ['class'=>'form-control']) }}
+				{{ Form::text('gta_serie', 'J', ['class'=>'form-control']) }}
 			</div>
 		</div>
 
