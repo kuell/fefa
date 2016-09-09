@@ -33,7 +33,6 @@
 				@if(!empty($nota->chave))
 					{{ Form::text('cidade', null, ['class'=>'form-control', 'readonly']) }}
 				@else
-
 					{{ Form::select('cidade', ['Selecione ...']+Municipio::municipios(), null, ['class'=>'form-control']) }}
 				@endif
 

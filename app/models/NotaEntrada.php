@@ -26,6 +26,10 @@ class NotaEntrada extends \Eloquent {
 	public function notasPecuarista() {
 		return $this->hasMany('NotaPecuarista', 'numero_nota_entrada', 'numero_nota_entrada');
 	}
+	public function gtas()
+	{
+		return $this->hasMany('NotaGta', 'numero_nota_entrada', 'numero_nota_entrada');
+	}
 
 	public function getNfpAttribute() {
 		return implode('/', $this->notas_pecuarista->lists('numero_nota_produtor'));
@@ -55,6 +59,9 @@ class NotaEntrada extends \Eloquent {
 	public function getGtaAttribute() {
 		if (count($this->fefa)) {
 			return $this->fefa->gta;
+		}
+		else{
+			return implode(', ', $this->gtas()->lists('numero_gta')) ;
 		}
 	}
 	public function getGtaSerieAttribute() {
