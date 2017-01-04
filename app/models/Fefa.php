@@ -75,7 +75,7 @@ class Fefa extends \Eloquent {
 	public static function getTotalPeso($sexo, $cidade) {
 		$periodo = explode(' - ', Input::get('periodo'));
 
-		$return = DB::table('mov_fefa')->whereBetween('data_compra', $periodo);
+		$return = DB::table('mov_fefa')->where('situacao', 'ativo');
 
 		if ($sexo == 'M') {
 			if (!empty(Input::get('cidade'))) {

@@ -66,14 +66,27 @@ class FefaController extends \BaseController {
 
 		$validate = Validator::make($input, $this->fefas->rules);
 
-		if ($validate->passes()) {
-			$fefa = new Fefa($input);
+		if ($validate->passes()) {			
+			$fefa = new Fefa();
+			$fefa->chave = $input['chave'];
+			$fefa->data_compra = $input['data_compra'];
+			$fefa->nfe = $input['nfe'];
+			$fefa->nfp = $input['nfp'];
+			$fefa->cidade = $input['cidade'];
+			$fefa->produtor = $input['produtor'];
+			$fefa->propriedade = $input['propriedade'];
+			$fefa->qtd_macho = $input['qtd_macho'];
+			$fefa->peso_macho = $input['peso_macho'];
+			$fefa->qtd_femea = $input['qtd_femea'];
+			$fefa->peso_femea = $input['peso_femea'];
+			$fefa->gta = $input['gta'];
+			$fefa->gta_serie = $input['gta_serie'];
 
 			$fefa->save();
 
 			return Redirect::to('/');
 		} else {
-			return Redirect::route('fefa.edit', ['chave' => $input['chave']])
+			return Redirect::route('fefa.create', ['chave' => $input['chave']])
 				->withInput()
 				->withErrors($validate)
 				->with('message', 'Houve erros na validação dos dados.');
@@ -106,7 +119,7 @@ class FefaController extends \BaseController {
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  int $id
 	 * @return Response
 	 */
 	public function update($id) {

@@ -38,10 +38,10 @@ class RelatorioSif extends Fpdf {
 
 		$this->Cell(15, 4, 'Data Compra', 1, 0, "C", 1);
 		$this->Cell(37, 4, 'GTA', 1, 0, "C", 1);
-		$this->Cell(10, 4, 'SERIE', 1, 0, "C", 1);
+	//	$this->Cell(10, 4, 'SERIE', 1, 0, "C", 1);
 		$this->Cell(45, 4, 'NFP', 1, 0, "C", 1);
 		$this->Cell(40, 4, 'MUNICIPIO', 1, 0, "C", 1);
-		$this->Cell(40, 4, 'PRODUTOR', 1, 0, "C", 1);
+		$this->Cell(50, 4, 'PRODUTOR', 1, 0, "C", 1);
 		$this->Cell(40, 4, 'PROPRIEDADE', 1, 0, "C", 1);
 		$this->Cell(15, 4, 'MACHO', 1, 0, "C", 1);
 		$this->Cell(15, 4, 'FEMEA', 1, 0, "C", 1);
@@ -56,11 +56,11 @@ class RelatorioSif extends Fpdf {
 
 		foreach ($fefas as $fefa) {
 			$this->Cell(15, 4, Format::dateView($fefa->data_compra), 1, 0, "C", 0);
-			$this->Cell(37, 4, $fefa->gta, 1, 0, "L", 0);
-			$this->Cell(10, 4, $fefa->gta_serie, 1, 0, "C", 0);
+			$this->Cell(37, 4, substr($fefa->gta, 0, 33), 1, 0, "L", 0);
+		//	$this->Cell(10, 4, $fefa->gta_serie, 1, 0, "C", 0);
 			$this->Cell(45, 4, substr($fefa->nfp, 0, 40), 1, 0, "L", 0);
 			$this->Cell(40, 4, utf8_decode($fefa->cidade), 1, 0, "L", 0);
-			$this->Cell(40, 4, substr($fefa->produtor, 0, 29), 1, 0, "L", 0);
+			$this->Cell(50, 4, substr($fefa->produtor, 0, 35), 1, 0, "L", 0);
 			$this->Cell(40, 4, substr($fefa->propriedade, 0, 29), 1, 0, "L", 0);
 			$this->Cell(15, 4, $fefa->qtd_macho, 1, 0, "L", 0);
 			$this->Cell(15, 4, $fefa->qtd_femea, 1, 0, "L", 0);
