@@ -175,7 +175,13 @@ class FefaController extends \BaseController {
 	public function getRelatorioFefa() {
 		$fefas = $this->fefas->abertas()->orderBy('data_compra');
 
+		if(!empty(Input::get('periodo'))){
+			$fefas = $fefas->periodo();	
+		}
+		
 		return View::make('relatorio_fefa', compact('fefas'));
+
+
 	}
 
 }
