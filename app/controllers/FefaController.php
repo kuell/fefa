@@ -26,33 +26,53 @@ class FefaController extends \BaseController {
 	 */
 	public function create() {
 
-		if (!empty(Input::get('avulsa')) && empty(Input::get('chave'))) {
-			$nota = new Fefa();
-			return View::make('form', compact('nota'));
+	    $fefa = Fefa::where(Input::all())->first();
 
-		} else if (!empty(Input::get('chave'))) {
+        if(count($fefa)){
+            $nota = $fefa;
+            $empresa = $fefa->empresa;
 
-			$nota = NotaEntrada::where('chave_acesso_nfe', Input::get('chave', null))->first();
-			
-			if(!empty($nota)){
+            return View::make('form', compact('nota', 'empresa'));
+        }
+        else {
 
-				
-				if (count($nota->fefa) != 0) {
-					return Redirect::route('fefa.edit', $nota->fefa->id);
-				} else {
-					return View::make('form', compact('nota'));
-				}
+            $empresas = Empresa::all();
 
-			}
-			else{
-				
-				return Redirect::route('fefa.index')
-					->withErrors(Input::all())
-					->with('message', 'Chave de acesso da nota não encontrada!');
-				
-			}
-		}
+            foreach ($empresas as $emp) {
+                $pos = strpos(Input::get('chave'), "$emp->cnpj");
 
+
+                if ($pos) {
+                    $empresa = $emp;
+                    break;
+                } else {
+                    $empresa = null;
+                }
+            }
+
+
+            if ($empresa) {
+
+                $nf = DB::connection($empresa->connection)->select($empresa->sql_nota, [Input::get('chave')]);
+                $nota = $nf[0];
+
+                $nfp = DB::connection($empresa->connection)->select($empresa->sql_nfp, [$nota->codigo_pecuarista, $nota->numero_nota_entrada]);
+
+                foreach ($nfp as $n) {
+                    $nota_produtor[] = $n->numero_nota_produtor;
+
+                }
+
+                $nota->nfp = implode($nota_produtor, ' ,');
+
+
+                return View::make('form', compact('nota', 'empresa'));
+
+            } else {
+                return Redirect::back()->with('message', 'Erro ao encontrar a empresa emissora da nota');
+            }
+
+        }
 
 	}
 
@@ -63,34 +83,69 @@ class FefaController extends \BaseController {
 	 */
 	public function store() {
 		$input = Input::all();
+        $fefa = Fefa::where('chave', $input['chave'])->first();
 
-		$validate = Validator::make($input, $this->fefas->rules);
+        if(count($fefa)){
+            $validate = Validator::make($input, $this->fefas->rules);
 
-		if ($validate->passes()) {			
-			$fefa = new Fefa();
-			$fefa->chave = $input['chave'];
-			$fefa->data_compra = $input['data_compra'];
-			$fefa->nfe = $input['nfe'];
-			$fefa->nfp = $input['nfp'];
-			$fefa->cidade = $input['cidade'];
-			$fefa->produtor = $input['produtor'];
-			$fefa->propriedade = $input['propriedade'];
-			$fefa->qtd_macho = $input['qtd_macho'];
-			$fefa->peso_macho = $input['peso_macho'];
-			$fefa->qtd_femea = $input['qtd_femea'];
-			$fefa->peso_femea = $input['peso_femea'];
-			$fefa->gta = $input['gta'];
-			$fefa->gta_serie = $input['gta_serie'];
+            if ($validate->passes()) {
+                $fefa->chave = $input['chave'];
+                $fefa->data_compra = $input['data_compra'];
+                $fefa->nfe = $input['nfe'];
+                $fefa->nfp = $input['nfp'];
+                $fefa->cidade = $input['cidade'];
+                $fefa->produtor = $input['produtor'];
+                $fefa->propriedade = $input['propriedade'];
+                $fefa->qtd_macho = $input['qtd_macho'];
+                $fefa->peso_macho = $input['peso_macho'];
+                $fefa->qtd_femea = $input['qtd_femea'];
+                $fefa->peso_femea = $input['peso_femea'];
+                $fefa->gta = $input['gta'];
+                $fefa->gta_serie = $input['gta_serie'];
+                $fefa->empresa_id = $input['empresa_id'];
 
-			$fefa->save();
+                $fefa->save();
 
-			return Redirect::to('/');
-		} else {
-			return Redirect::route('fefa.create', ['chave' => $input['chave']])
-				->withInput()
-				->withErrors($validate)
-				->with('message', 'Houve erros na validação dos dados.');
-		}
+                return Redirect::back()->with('message', 'Registro atualizado com sucesso!');
+            }else {
+                return Redirect::route('fefa.create', ['chave' => $input['chave']])
+                    ->withInput()
+                    ->withErrors($validate)
+                    ->with('message', 'Houve erros na validação dos dados.');
+            }
+        }
+        else{
+
+            $validate = Validator::make($input, $this->fefas->rules);
+
+            if ($validate->passes()) {
+                $fefa = new Fefa();
+                $fefa->chave = $input['chave'];
+                $fefa->data_compra = $input['data_compra'];
+                $fefa->nfe = $input['nfe'];
+                $fefa->nfp = $input['nfp'];
+                $fefa->cidade = $input['cidade'];
+                $fefa->produtor = $input['produtor'];
+                $fefa->propriedade = $input['propriedade'];
+                $fefa->qtd_macho = $input['qtd_macho'];
+                $fefa->peso_macho = $input['peso_macho'];
+                $fefa->qtd_femea = $input['qtd_femea'];
+                $fefa->peso_femea = $input['peso_femea'];
+                $fefa->gta = $input['gta'];
+                $fefa->gta_serie = $input['gta_serie'];
+                $fefa->empresa_id = $input['empresa_id'];
+
+                $fefa->save();
+
+                return Redirect::to('/');
+            } else {
+                return Redirect::route('fefa.create', ['chave' => $input['chave']])
+                    ->withInput()
+                    ->withErrors($validate)
+                    ->with('message', 'Houve erros na validação dos dados.');
+            }
+
+        }
 
 	}
 
@@ -124,10 +179,10 @@ class FefaController extends \BaseController {
 	 */
 	public function update($id) {
 		$input = Input::all();
-		
+
 		$rules = $this->fefas->rules;
 
-		$rules['nfe'] = $this->fefas->rules['nfe'].','.$id;
+	//	$rules['nfe'] = $this->fefas->rules['nfe'].','.$id;
 		
 		$validate = Validator::make($input, $rules);
 

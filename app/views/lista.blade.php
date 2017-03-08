@@ -1,24 +1,44 @@
 @if(!empty($fefas))
 
-{{ Form::open(['route'=>'fefa.create','method'=>'get' ,'class'=>'navbar-form navbar-right', 'onSubmit'=>'load()']) }}
-	<div class="form-group has-warning">
-    	<input type="text" class="form-control" placeholder="Adicionar nota pela chave de acesso" autofocus size="50" name="chave">
-    	{{ Form::button('Adicionar', ['class'=>'btn btn-success', 'id'=>'create']) }}
-    </div>
-  {{ Form::close() }}
-
 <div class="table-responsive form form-horizontal">
-	<dl class="dl-horizontal">
-	  	<dt>Qtde. Machos: <dd>{{ number_format(Fefa::total('qtd_macho'), 0, ',', '.') }}</dd></dt>
-		<dt>Peso Machos: <dd>{{ number_format(Fefa::total('peso_macho'), 2, ',', '.') }}</dd></dt>
-		<dt>Qtde. Femea: <dd>{{ number_format(Fefa::total('qtd_femea'), 0, ',', '.') }}</dd></dt>
-		<dt>Peso Femea: <dd>{{ number_format(Fefa::total('peso_femea'), 2, ',', '.') }}</dd></dt>
-	</dl>
+    @foreach(Empresa::all() as $empresa)
+        <div class="col-md-3">
+        {{ $empresa->razao }}
+            <dl class="dl-horizontal">
+                <dt></dt>
+                <dt>Qtde. Machos: <dd>  {{ number_format($empresa->fefas()->abertas()->sum('qtd_macho'), 0, ',', '.') }}   </dd></dt>
+                <dt>Peso Machos: <dd>   {{ number_format($empresa->fefas()->abertas()->sum('peso_macho'), 2, ',', '.') }}  </dd></dt>
+                <dt>Qtde. Femea: <dd>   {{ number_format($empresa->fefas()->abertas()->sum('qtd_femea'), 0, ',', '.') }}   </dd></dt>
+                <dt>Peso Femea: <dd>    {{ number_format($empresa->fefas()->abertas()->sum('peso_femea'), 2, ',', '.') }}  </dd></dt>
+            </dl>
+        </div>
+        <!-- /.col-md-3 -->
+    @endforeach
+
+        <div class="col-md-3">
+            Total
+            <dl class="dl-horizontal">
+                <dt></dt>
+                <dt>Qtde. Machos: <dd>  {{ number_format(Fefa::abertas()->sum('qtd_macho'), 0, ',', '.') }}   </dd></dt>
+                <dt>Peso Machos: <dd>   {{ number_format(Fefa::abertas()->sum('peso_macho'), 2, ',', '.') }}  </dd></dt>
+                <dt>Qtde. Femea: <dd>   {{ number_format(Fefa::abertas()->sum('qtd_femea'), 0, ',', '.') }}   </dd></dt>
+                <dt>Peso Femea: <dd>    {{ number_format(Fefa::abertas()->sum('peso_femea'), 2, ',', '.') }}  </dd></dt>
+            </dl>
+        </div>
 </div>
+
+<div class="col-md-12">
+    {{ Form::open(['route'=>'fefa.create','method'=>'get' ,'class'=>'navbar-form navbar-right', 'onSubmit'=>'load()']) }}
+    <div class="form-group has-warning">
+        <input type="text" class="form-control" placeholder="Adicionar nota pela chave de acesso" autofocus size="60" name="chave">
+    </div>
+    {{ Form::close() }}
+</div>
+<!-- /.col-md-12 -->
 
 <hr />
 <div class="form-group">
-	<table class="table table-hover" id="fefa">
+	<table class="table table-hover table-responsive" id="fefa">
 		<thead>
 			<tr>
 				<th>NFE</th>
@@ -37,7 +57,7 @@
 		<tbody>
 			@foreach($fefas as $fefa)
 			<tr>
-				<td>{{ link_to_route('fefa.edit', $fefa->nfe, $fefa->id) }}</td>
+				<td>{{ $fefa->nfe }}</td>
 				<td>{{ Format::dateView($fefa->data_compra) }}</td>
 				<td>{{ $fefa->nfp }}</td>
 				<td>{{ $fefa->cidade }}</td>
@@ -70,7 +90,7 @@
 
 <style type="text/css">
 	.table{
-		font-size: 9px;
+		font-size: 10px;
 	}
 </style>
 

@@ -13,7 +13,7 @@ class Fefa extends \Eloquent {
 		'gta_serie' => 'required',
 		'produtor'=>'required',
 		'propriedade'=>'required',
-		'nfe'=>'required|unique:mov_fefa,nfe',
+		//'nfe'=>'required|unique:mov_fefa,nfe',
 		'cidade'=>'required'
 	];
 
@@ -26,6 +26,10 @@ class Fefa extends \Eloquent {
 	public function scopeAbertas($query){
 		return $query->whereNull('fechamento');
 	}
+
+	public function empresa(){
+	    return $this->belongsTo('Empresa', 'empresa_id');
+    }
 
 	public static function total($campo) {
 		$total = DB::table('mov_fefa')->whereNull('fechamento')->sum($campo);
@@ -43,34 +47,7 @@ class Fefa extends \Eloquent {
 			return date('d/m/Y', strtotime($this->attributes['data_compra']));
 		}
 	}
-	public function getQtdMachoAttribute($qtd) {
-		if (!empty($this->attributes['qtd_macho'])) {
-			return $this->attributes['qtd_macho'] = Format::valorDB($qtd);
-		} else {
-			return 0;
-		}
-	}
-	public function getQtdFemeaAttribute($qtd) {
-		if (!empty($this->attributes['qtd_femea'])) {
-			return $this->attributes['qtd_femea'] = Format::valorDB($qtd);
-		} else {
-			return '0';
-		}
-	}
-	public function getPesoMachoAttribute($peso) {
-		if (!empty($this->attributes['peso_macho'])) {
-			return $this->attributes['peso_macho'] = Format::valorView($peso, 2);
-		} else {
-			return 0;
-		}
-	}
-	public function getPesoFemeaAttribute($peso) {
-		if (!empty($this->attributes['peso_femea'])) {
-			return $this->attributes['peso_femea'] = Format::valorView($peso, 2);
-		} else {
-			return 0;
-		}
-	}
+
 
 	public static function getTotalPeso($sexo, $cidade) {
 		$periodo = explode(' - ', Input::get('periodo'));

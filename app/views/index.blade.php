@@ -66,15 +66,12 @@
           <h2 class="sub-header">Movimentações Fefa</h2>
 
           @if (Session::has('message'))
-    @if(!$errors->all())
-<?php
-$tipo = 'success';
-?>
-@else
-<?php
-$tipo = 'warning';
-?>
-    @endif
+            @if(!$errors->all())
+                <?php $tipo = 'success'; ?>
+            @else
+                <?php $tipo = 'warning'; ?>
+            @endif
+
       <div class="alert alert-{{ $tipo }} fade in">
         <button type="button" class="btn close" data-dismiss="alert" aria-hidden="true">
           ×

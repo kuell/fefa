@@ -73,7 +73,7 @@ return array(
 			'prefix'   => '',
 			'schema'   => 'public',
 		),
-		'pgsql2'    => array(
+		'frigodata'    => array(
 			'driver'   => 'pgsql',
 			'host'     => '10.1.1.2',
 			'database' => 'frizelo',
@@ -83,7 +83,16 @@ return array(
 			'prefix'   => '',
 			'schema'   => 'public',
 		),
-
+        'brazpeli'    => array(
+            'driver'   => 'pgsql',
+            'host'     => '10.1.1.247',
+            'database' => 'brazpeli',
+            'username' => 'postgres',
+            'password' => '#fribackup2015',
+            'charset'  => 'WIN1252',
+            'prefix'   => '',
+            'schema'   => 'public',
+        ),
 		'sqlsrv'    => array(
 			'driver'   => 'sqlsrv',
 			'host'     => 'localhost',
