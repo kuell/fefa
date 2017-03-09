@@ -227,14 +227,23 @@ class FefaController extends \BaseController {
 		return View::make('relatorio_sif', compact('fefas'));
 	}
 
-	public function getRelatorioFefa() {
-		$fefas = $this->fefas->abertas()->orderBy('data_compra');
+	public function getRelatorioFefa($empresa_id = 0) {
+
+	    if($empresa_id == 0){
+	        $empresa = Empresa::find(1);
+            $fefas = $this->fefas->abertas()->orderBy('data_compra');
+        }
+        else{
+	        $empresa = Empresa::find($empresa_id);
+	        $fefas = $empresa->fefas()->abertas()->orderBy('data_compra');
+        }
+
 
 //		if(!empty(Input::get('periodo'))){
 //			$fefas = $fefas->periodo();	
 //		}
 		
-		return View::make('relatorio_fefa', compact('fefas'));
+		return View::make('relatorio_fefa', compact('fefas', 'empresa'));
 
 
 	}

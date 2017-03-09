@@ -43,7 +43,7 @@
 			</div>
 			<div class="col-md-6">
 				{{ Form::label('propriedade', 'Propriedade: ' , ['class'=>'form-label']) }}
-				{{ Form::text('propriedade', $nota->fazenda, ['class'=>'form-control', 'readonly']) }}
+				{{ Form::text('propriedade', empty(utf8_encode($nota->fazenda))?$nota->fazenda:utf8_encode($nota->fazenda), ['class'=>'form-control', 'readonly']) }}
 			</div>
 		</div>
 

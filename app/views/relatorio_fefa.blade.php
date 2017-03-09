@@ -7,6 +7,7 @@ class RelatorioSif extends Fpdf {
 
 	public $tituloDoc = '';
 	public $angle     = 0;
+	public $empresa;
 
 	public function Header() {
 		$this->SetFont('Arial', 'B', 16);
@@ -36,7 +37,7 @@ class RelatorioSif extends Fpdf {
 
 	public function listar($fefas) {
 
-		$this->Cell(15, 4, 'Data Compra', 1, 0, "C", 1);
+		$this->Cell(20, 4, 'Data Compra', 1, 0, "C", 1);
 		$this->Cell(37, 4, 'GTA', 1, 0, "C", 1);
 	//	$this->Cell(10, 4, 'SERIE', 1, 0, "C", 1);
 		$this->Cell(45, 4, 'NFP', 1, 0, "C", 1);
@@ -45,7 +46,7 @@ class RelatorioSif extends Fpdf {
 		$this->Cell(40, 4, 'PROPRIEDADE', 1, 0, "C", 1);
 		$this->Cell(15, 4, 'MACHO', 1, 0, "C", 1);
 		$this->Cell(15, 4, 'FEMEA', 1, 0, "C", 1);
-		$this->Cell(20, 4, 'TOTAL', 1, 0, "C", 1);
+		$this->Cell(15, 4, 'TOTAL', 1, 0, "C", 1);
 
 		$this->Ln();
 
@@ -55,16 +56,16 @@ class RelatorioSif extends Fpdf {
 		$this->SetFont('Arial', '', 6);
 
 		foreach ($fefas as $fefa) {
-			$this->Cell(15, 4, Format::dateView($fefa->data_compra), 1, 0, "C", 0);
+			$this->Cell(20, 4, Format::dateView($fefa->data_compra), 1, 0, "C", 0);
 			$this->Cell(37, 4, substr($fefa->gta, 0, 33), 1, 0, "L", 0);
 		//	$this->Cell(10, 4, $fefa->gta_serie, 1, 0, "C", 0);
 			$this->Cell(45, 4, substr($fefa->nfp, 0, 40), 1, 0, "L", 0);
 			$this->Cell(40, 4, utf8_decode($fefa->cidade), 1, 0, "L", 0);
 			$this->Cell(50, 4, substr($fefa->produtor, 0, 35), 1, 0, "L", 0);
 			$this->Cell(40, 4, substr($fefa->propriedade, 0, 29), 1, 0, "L", 0);
-			$this->Cell(15, 4, $fefa->qtd_macho, 1, 0, "L", 0);
-			$this->Cell(15, 4, $fefa->qtd_femea, 1, 0, "L", 0);
-			$this->Cell(20, 4, $fefa->qtd_macho+$fefa->qtd_femea, 1, 0, "L", 0);
+			$this->Cell(15, 4, $fefa->qtd_macho, 1, 0, "R", 0);
+			$this->Cell(15, 4, $fefa->qtd_femea, 1, 0, "R", 0);
+			$this->Cell(15, 4, $fefa->qtd_macho+$fefa->qtd_femea, 1, 0, "R",1);
 
 			$totalMacho = $totalMacho+$fefa->qtd_macho;
 			$totalFemea = $totalFemea+$fefa->qtd_femea;
@@ -97,6 +98,7 @@ class RelatorioSif extends Fpdf {
 }
 
 $pdf = new RelatorioSif("L", "mm", "A4");
+$pdf->empresa = $empresa;
 $pdf->Dados($fefas);
 $pdf->Output();
 exit;

@@ -27,11 +27,15 @@ class RelatorioSif extends Fpdf {
 		$this->SetFont('Arial', '', 8);
 
 		if (Input::get('cidade') != '') {
-			$this->Cell(0, 4, Input::get('cidade'), 1, 0, 'C', 1);
-			$this->Ln();
 
-			$this->listar($fefas->where('cidade', Input::get('cidade'))->get());
-		} else {
+                $this->Cell(0, 4, Input::get('cidade'), 1, 0, 'C', 1);
+                $this->Ln();
+                $this->listar($fefas->where('cidade', Input::get('cidade'))->get());
+
+
+
+		}
+		else {
 			$this->Cell(0, 4, 'GERAL', 1, 0, 'C', 1);
 			$this->Ln();
 
