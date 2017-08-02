@@ -28,49 +28,38 @@ class FefaController extends \BaseController {
 
 	    $fefa = Fefa::where(Input::all())->first();
 
-        if(count($fefa)){
+        if(count($fefa))
+        {
             $nota = $fefa;
             $empresa = $fefa->empresa;
 
             return View::make('form', compact('nota', 'empresa'));
         }
+
         else {
 
-            $empresas = Empresa::all();
+            $empresa = Empresa::find(1);
 
-            foreach ($empresas as $emp) {
-                $pos = strpos(Input::get('chave'), "$emp->cnpj");
+            $nf = DB::connection($empresa->connection)->select($empresa->sql_nota, [Input::get('nfe')]);
+            $nota = $nf[0];
 
+            $nfp = DB::connection($empresa->connection)->select($empresa->sql_nfp, [$nota->codigo_pecuarista, $nota->numero_nota_entrada]);
 
-                if ($pos) {
-                    $empresa = $emp;
-                    break;
-                } else {
-                    $empresa = null;
-                }
+            $nota_produtor = [];
+
+            foreach ($nfp as $n) {
+                $nota_produtor[] = $n->numero_nota_produtor;
+
             }
 
-
-            if ($empresa) {
-
-                $nf = DB::connection($empresa->connection)->select($empresa->sql_nota, [Input::get('chave')]);
-                $nota = $nf[0];
-
-                $nfp = DB::connection($empresa->connection)->select($empresa->sql_nfp, [$nota->codigo_pecuarista, $nota->numero_nota_entrada]);
-
-                foreach ($nfp as $n) {
-                    $nota_produtor[] = $n->numero_nota_produtor;
-
-                }
-
-                $nota->nfp = implode($nota_produtor, ' ,');
+            $nota->nfp = implode($nota_produtor, ' ,');
 
 
-                return View::make('form', compact('nota', 'empresa'));
 
-            } else {
-                return Redirect::back()->with('message', 'Erro ao encontrar a empresa emissora da nota');
-            }
+
+            return View::make('form', compact('nota', 'empresa'));
+
+
 
         }
 
@@ -83,7 +72,7 @@ class FefaController extends \BaseController {
 	 */
 	public function store() {
 		$input = Input::all();
-        $fefa = Fefa::where('chave', $input['chave'])->first();
+        $fefa = Fefa::where('nfe', $input['nfe'])->first();
 
         if(count($fefa)){
             $validate = Validator::make($input, $this->fefas->rules);
@@ -244,6 +233,28 @@ class FefaController extends \BaseController {
 //		}
 		
 		return View::make('relatorio_fefa', compact('fefas', 'empresa'));
+
+
+	}
+
+	public function getRelatorioFefaExcel($empresa_id = 0) {
+
+	    if($empresa_id == 0){
+	        $empresa = Empresa::find(1);
+            $fefas = $this->fefas->abertas()->orderBy('data_compra');
+        }
+        else{
+	        $empresa = Empresa::find($empresa_id);
+	        $fefas = $empresa->fefas()->abertas()->orderBy('data_compra');
+        }
+
+        $fefas = $empresa->fefas()->get();
+
+//		if(!empty(Input::get('periodo'))){
+//			$fefas = $fefas->periodo();	
+//		}
+		
+		return View::make('relatorio_fefa_excel', compact('fefas'));
 
 
 	}

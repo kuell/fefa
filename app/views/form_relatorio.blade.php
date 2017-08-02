@@ -23,6 +23,7 @@
 			<div class="col-md-12">
 				{{ Form::button('SIF', ['class'=>'btn btn-info','name'=>'sif']) }}
 				{{ Form::button('FEFA', ['class'=>'btn btn-success', 'name'=>'fefa']) }}
+				{{ Form::button('FEFA EXCEL', ['class'=>'btn btn-success', 'name'=>'fefa_excel']) }}
 				{{ link_to_route('fefa.index', 'Voltar', null, ['class'=>'btn btn-danger']) }}
 			</div>
 		</div>
@@ -39,6 +40,9 @@
 		});
 		$('button[name=fefa]').click(function() {
 			open('/fefa/relatorio/fefa/'+$('select[name=empresa_id]').val()+'?periodo='+$('input[name=periodo]').val(), 'Print','channelmode=yes')
+		});
+		$('button[name=fefa_excel]').click(function() {
+			open('/fefa/relatorio/fefa-excel/'+$('select[name=empresa_id]').val()+'?periodo='+$('input[name=periodo]').val(), 'Print','channelmode=yes')
 		});
 	})
 	</script>

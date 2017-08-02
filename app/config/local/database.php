@@ -53,8 +53,8 @@ return array(
         ),
         'frigodata' => array(
             'driver'   => 'pgsql',
-            'host'     => '10.1.1.2',
-            'database' => 'frizelo',
+            'host'     => '192.168.1.9',
+            'database' => 'juti',
             'username' => 'frizelobackup',
             'password' => 'fribackup2015',
             'charset'  => 'WIN1252',

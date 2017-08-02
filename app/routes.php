@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('/fefa/relatorios', 'FefaController@getRelatorios');
 Route::get('/fefa/relatorio/sif', 'FefaController@getRelatorioSif');
 Route::get('/fefa/relatorio/fefa/{empresa}', 'FefaController@getRelatorioFefa');
+Route::get('/fefa/relatorio/fefa-excel/{empresa}', 'FefaController@getRelatorioFefaExcel');
 
 Route::get('fefa/finalizar', function(){
 	return View::make('finalizar');

@@ -30,7 +30,7 @@
 <div class="col-md-12">
     {{ Form::open(['route'=>'fefa.create','method'=>'get' ,'class'=>'navbar-form navbar-right', 'onSubmit'=>'load()']) }}
     <div class="form-group has-warning">
-        <input type="text" class="form-control" placeholder="Adicionar nota pela chave de acesso" autofocus size="60" name="chave">
+        <input type="text" class="form-control" placeholder="Digite o Numero da Nota" autofocus size="30" name="nfe">
     </div>
     {{ Form::close() }}
 </div>
