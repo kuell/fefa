@@ -2,6 +2,12 @@
 
 @section('main')
 
+	@if(!empty($nota->id))
+		{{ Form::model($nota, ['route'=>['fefa.destroy', $nota->id], 'method'=>'DELETE']) }}
+		{{ Form::submit('Deletar', ['class'=>' pull-right btn btn-sm btn-danger']) }}
+		{{ Form::close() }}
+	@endif
+
 	{{ Form::model($nota, ['class'=>'form form-horizontal', 'route'=>['fefa.store']]) }}
 
 		<div class="form-group">
@@ -70,7 +76,7 @@
 		<div class="form-group">
 			<div class="col-md-6">
 				{{ Form::label('gta', 'Numero da GTA: ' , ['class'=>'form-label']) }}
-				{{ Form::text('gta', null, ['class'=>'form-control', 'autofocus', 'id'=>'gta']) }}
+				{{ Form::text('gta', Input::old('gta'), ['class'=>'form-control', 'autofocus', 'id'=>'gta']) }}
 			</div>
 			<div class="col-md-3">
 				{{ Form::label('gta_serie', 'Serie da GTA: ' , ['class'=>'form-label']) }}
@@ -81,6 +87,7 @@
 		<div class="form-group">
 			<div class="col-md-12">
 				{{ Form::submit('Gravar', ['class'=>'btn btn-success']) }}
+
 				{{ link_to_route('fefa.index', 'Voltar', null, ['class'=>'btn btn-danger']) }}
 			</div>
 		</div>
@@ -88,7 +95,9 @@
 	{{ Form::close() }}
 
 <script type="text/javascript">
+
 	document.getElementById('gta').focus();
+
 </script>
 
 @stop

@@ -44,7 +44,7 @@ return array(
         'frigodatas' => array(
             'driver'   => 'pgsql',
             'host'     => 'localhost',
-            'database' => 'frigo',
+            'database' => 'fefa',
             'username' => 'postgres',
             'password' => 'aporedux',
             'charset'  => 'WIN1252',

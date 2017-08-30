@@ -3,6 +3,9 @@
 /**
  *
  */
+
+use Carbon\Carbon as Carbon;
+
 class Fefa extends \Eloquent {
 	protected $guarded = [];
 	protected $table   = 'mov_fefa';
@@ -41,10 +44,11 @@ class Fefa extends \Eloquent {
 		return $this->belongsTo('NotaEntrada', 'chave', 'chave_acesso_nfe');
 	}
 
+
 	public function getDataCompraAttribute() {
 
 		if (!empty($this->attributes['data_compra'])) {
-			return date('d/m/Y', strtotime($this->attributes['data_compra']));
+			return $this->attributes['data_compra'];
 		}
 	}
 

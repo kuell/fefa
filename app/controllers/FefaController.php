@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon as Carbon;
+
 class FefaController extends \BaseController {
 
 	private $fefas;
@@ -41,6 +43,7 @@ class FefaController extends \BaseController {
             $empresa = Empresa::find(1);
 
             $nf = DB::connection($empresa->connection)->select($empresa->sql_nota, [Input::get('nfe')]);
+
             $nota = $nf[0];
 
             $nfp = DB::connection($empresa->connection)->select($empresa->sql_nfp, [$nota->codigo_pecuarista, $nota->numero_nota_entrada]);
@@ -53,8 +56,6 @@ class FefaController extends \BaseController {
             }
 
             $nota->nfp = implode($nota_produtor, ' ,');
-
-
 
 
             return View::make('form', compact('nota', 'empresa'));
@@ -72,7 +73,28 @@ class FefaController extends \BaseController {
 	 */
 	public function store() {
 		$input = Input::all();
+
         $fefa = Fefa::where('nfe', $input['nfe'])->first();
+
+        $input['cidade'] = strtr(
+
+            $input['cidade'],
+
+            array (
+
+                'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A',
+                'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+                'Ì' => 'I', 'Í' => 'I', 'Î' => 'I', 'Ï' => 'I', 'Ð' => 'D', 'Ñ' => 'N',
+                'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O',
+                'Ù' => 'U', 'Ú' => 'U', 'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Ŕ' => 'R',
+                'Þ' => 's', 'ß' => 'B', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a',
+                'ä' => 'a', 'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e',
+                'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i', 'ï' => 'i',
+                'ð' => 'o', 'ñ' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o',
+                'ö' => 'o', 'ø' => 'o', 'ù' => 'u', 'ú' => 'u', 'û' => 'u', 'ý' => 'y',
+                'þ' => 'b', 'ÿ' => 'y', 'ŕ' => 'r'
+            )
+        );
 
         if(count($fefa)){
             $validate = Validator::make($input, $this->fefas->rules);
@@ -82,7 +104,7 @@ class FefaController extends \BaseController {
                 $fefa->data_compra = $input['data_compra'];
                 $fefa->nfe = $input['nfe'];
                 $fefa->nfp = $input['nfp'];
-                $fefa->cidade = $input['cidade'];
+                $fefa->cidade = preg_replace( '/[`^~\'"]/', null, iconv( 'UTF-8', 'ASCII//TRANSLIT', $input['cidade'] ) );
                 $fefa->produtor = $input['produtor'];
                 $fefa->propriedade = $input['propriedade'];
                 $fefa->qtd_macho = $input['qtd_macho'];
@@ -108,12 +130,13 @@ class FefaController extends \BaseController {
             $validate = Validator::make($input, $this->fefas->rules);
 
             if ($validate->passes()) {
+
                 $fefa = new Fefa();
                 $fefa->chave = $input['chave'];
-                $fefa->data_compra = $input['data_compra'];
+                $fefa->data_compra = Carbon::createFromFormat('d/m/Y', $input['data_compra'])->format('Y-m-d');
                 $fefa->nfe = $input['nfe'];
                 $fefa->nfp = $input['nfp'];
-                $fefa->cidade = $input['cidade'];
+                $fefa->cidade = preg_replace( '/[`^~\'"]/', null, iconv( 'UTF-8', 'ASCII//TRANSLIT', $input['cidade'] ) );
                 $fefa->produtor = $input['produtor'];
                 $fefa->propriedade = $input['propriedade'];
                 $fefa->qtd_macho = $input['qtd_macho'];
@@ -199,7 +222,7 @@ class FefaController extends \BaseController {
 		$fefa = $this->fefas->find($id);
 		$fefa->delete();
 
-		return Redirect::route('fefa.index');
+		return Redirect::back();
 	}
 
 	public function getRelatorios() {
